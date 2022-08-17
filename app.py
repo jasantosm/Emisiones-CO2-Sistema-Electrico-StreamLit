@@ -58,9 +58,11 @@ def main():
         plt.ylabel('CO2eq Ton')
         st.pyplot(fig)
     else:
-        #model = load('./model/perceptron.joblib') 
-        #y_pred = model.predict(X_test)
-        #fig = plt.figure(dpi = 120, figsize = (12, 5))
+        r = requests.get('http://127.0.0.1:8000/model/prediction/')
+        response_json = r.json()
+        y_pred = response_json['y_pred']
+        x = response_json['x']
+        fig = plt.figure(dpi = 120, figsize = (12, 5))
         plt.plot(x, y_test, ls = "--", label="Valor verdadero (pruebas)")
         plt.plot(x, y_pred, ls = '-', label="Valor predicho (pruebas)")
         plt.title("Predicción vs valores verdaderos (pruebas) - MLPRegressor")
